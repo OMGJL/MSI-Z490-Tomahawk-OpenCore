@@ -8,7 +8,7 @@ Hi, this is my own take of OpenCore configuration with MSI Z490 Tomahawk
 
 ​	CPU: 				 i9 10858k (OCed to 4.9Ghz All Core, 4.7Ghz Ring Clock)
 
-​	Cooling: 		   Custom Water Cooling (WIP, doesn't affect this project)
+​	Cooling: 		   Custom Water Cooling (WIP, doesn't affect the scope of this project)
 
 ​	Motherboard:  MSI Z490 Tomahawk (BIOS Ver: E7C80IMS.190)
 
@@ -18,15 +18,15 @@ Hi, this is my own take of OpenCore configuration with MSI Z490 Tomahawk
 
 ​	GPU:					Reference AMD RX 6800 XT (Manufacturered by MSI)
 
-​	WiFi:					BCM94360
+​	WiFi:					BCM94360 Apple Original With PCIe Adapter
 
 ​	PSU:					Thermaltake GF1 750w (Doesn't affect this project)
 
 
 
- (I was using Intel AX200, however I was not able to get bluetooth working, even with different versions of IntelBluetoothFirmware.kext and BlueToolFixup.kext, changing USB Port type won't work either, if someone could let me know why it would be great)
+ (I was using Intel AX200, however I was not able to get bluetooth working, even with different versions of IntelBluetoothFirmware.kext and BlueToolFixup.kext, changing USB Port Mapping type won't work either, if someone could let me know why it would be great)
 
--------
+----------------
 
 ## What's Working and what's not:
 
@@ -48,7 +48,7 @@ Note: Please Cross Reference my config with [Dortania's Guide](https://dortania.
 
 **Some of the config has been setup according to my own requirement which might not suit you**, for example USB Mapping would be slightly different if your computer case IO is different to mine (I have 1x USB3.0 port and 2x USB2.0 port on the Case's front IO) **My Guide will hopefully cover all the customize part, let me know if I missed anything.**
 
-##### 1.  Necessary BIOS Config
+#### 1.  Necessary BIOS Config
 
 - Disable CFG Lock
 - Disable Fastboot
@@ -57,7 +57,7 @@ Note: Please Cross Reference my config with [Dortania's Guide](https://dortania.
 - Enable iGPU 64MB
 - Actually a lot more ---- **WIP**
 
-##### 2. Prepare your own USB Installer, and copy my EFI folder to the EFI Partition of the USB. 
+#### 2. Prepare your own USB Installer, and copy my EFI folder to the EFI Partition of the USB. 
 
 To Mount EFI Folder:
 
@@ -80,7 +80,7 @@ Z refers to the Letter you want to mount your drive
 
 Note After mount the partition is won't be accessible with explorer unless you kill the explorer process and launch it again with Admin prevelidge, a simple workaround is to **use a alternative file explorer** like **Explorer++** with **Admin prevelidge**.
 
-##### 3. Setup the SMBIOS with the Generator
+#### 3. Setup the SMBIOS with the Generator
 
 To Edit the config.plist, you can use [ProperTree](https://github.com/corpnewt/ProperTree) (Note, to use this app, you will need to install [Python](https://www.python.org/downloads/) 3.9+ first, the MacOS pre-installed Python isn't sufficient enough. Then navigate to ~/ProperTree/Scripts, and run buildapp-select.command to build a MacOS app.)
 
@@ -99,15 +99,15 @@ You are done.
 
 **NOTE:** iMac20,2 should be good for Z490 platform, if you have a different motherboard please check other guide, YMMV.
 
-##### 3. Install MacOS 
+#### 4. Install MacOS 
 
 Detail won't be provided, please refer to Dortania's Guide
 
-##### 4. Post-Install
+#### 5. Post-Install
 
 [Place your EFI Folder to MacOS drive](https://dortania.github.io/OpenCore-Post-Install/universal/oc2hdd.html#grabbing-opencore-off-the-usb)
 
-##### 5. Do your own USBMap
+#### 6. Do your own USBMap
 
 I used [USBToolBox](https://github.com/USBToolBox/tool) for convenience. It works out perfect for this board, if you care about every second of your boot time, maybe use DSDT Patch method instead. 
 
@@ -141,7 +141,7 @@ then generate UTBMap.kext, and place it in your EFI/OC/Kexts folder (and add to 
 
 
 
-##### 6. Good to know(My personal Experience)
+#### 7. Good to know(My personal Experience)
 
 When you add kext entry to your config.plist, **the order matters**
 
@@ -149,7 +149,7 @@ For example, you need to put VirtualSMC.kext before SMCProcessor.kext, otherwise
 
 
 
-##### 7. Nice to have
+#### 8. Nice to have
 
 **Allow your bluetooth device to connect to both your Windows/Mac without needing to pair them again.** Credit to [Dortania](https://github.com/dortania/clover-laptop-guide/blob/master/extras/dual-booting-with-bluetooth-devices.md) and u/TheVoyvode from [Reddit](https://www.reddit.com/r/hackintosh/comments/p5ost3/macos_monterey_and_windows_bluetooth_pairing/) 
 

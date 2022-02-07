@@ -173,7 +173,13 @@ Todo:
 
 **Enable ResizebleBar support**
 
-WIP, guide will upload soon
+WIP, guide will upload sometime later (too lazy for now)
+
+
+
+**Mouse Accerlation Off**
+
+[LinerMouse](https://github.com/linearmouse/linearmouse)
 
 
 

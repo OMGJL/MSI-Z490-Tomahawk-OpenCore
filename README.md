@@ -22,9 +22,9 @@ Hi, this is my own take of OpenCore configuration with MSI Z490 Tomahawk
 
 ​	PSU:					Thermaltake GF1 750w (Doesn't affect this project)
 
+\*\*My OC Setting is listed on the bottom of this Guide if you are intersted, **DO NOT Copy my setting** as it is very unlikely going to work even if you have exactly the same setup, **unless your silicon lottery is better than mine in everyway**. As all settings are tweaked to exactly the highest/lowest value that is still stable.
 
-
- (I was using Intel AX200, however I was not able to get bluetooth working, even with different versions of IntelBluetoothFirmware.kext and BlueToolFixup.kext, changing USB Port Mapping type won't work either, if someone could let me know why it would be great)
+ (I was using Intel AX200 for WiFi/Bluetooth, however I was not able to get bluetooth working on this setup, even with different versions of IntelBluetoothFirmware.kext and BlueToolFixup.kext, changing USB Port Mapping/type won't work either, if someone could let me know why it would be great) -- The Very Same Intel AX200 card I pulled out of this PC worked in my secondary PC (3770k + ASUS z77) with Monterey for BOTH bluetooth and WiFi, strange.
 
 ----------------
 
@@ -32,7 +32,7 @@ Hi, this is my own take of OpenCore configuration with MSI Z490 Tomahawk
 
 OpenCore: 0.7.7
 
-OS: Monterey 12.1 Latest Update (As of 2022/Jan/23)
+OS: Monterey 12.1 Latest Update (As of 2022/Feb/7)
 
 Everything seems to be working (WiFi, bluetooth, USB, Sleep, Wake, dGPU, iGPU, Audio)
 
@@ -50,12 +50,15 @@ Note: Please Cross Reference my config with [Dortania's Guide](https://dortania.
 
 #### 1.  Necessary BIOS Config
 
-- Disable CFG Lock
-- Disable Fastboot
-- Enable XMP Profile for RAM
-- Enable Above 4G decoding
-- Enable iGPU 64MB
-- Actually a lot more ---- **WIP**
+- Legacy USB Support = **Disable**
+- Above 4GB MMIO BIOS Assignment/ Above 4G Memory = **Enable**
+- Initiate Graphic Adapter = **IGD** (this is to get Intel HD Graphic working in MacOS, doesn't affect anything even if you have dGPU, you can still access BIOS with dGPU and everything. Note I have no monitor plugged into iGPU, all monitor is connected via dGPU)
+- IGD Multi-Monitor = **Enabled**
+- iGPU Memory = **64MB**
+- Fast Boot = **Disabled**
+- CFG Lock = **Disabled**
+- Intel C-State = **Disabled** (I honestly don't think this has to do with Hackintosh, I think I did it for Overclock stability)
+- Enable XMP Profile for RAM (Or Manually OC your memory like what I did)
 
 #### 2. Prepare your own USB Installer, and copy my EFI folder to the EFI Partition of the USB. 
 
@@ -82,7 +85,7 @@ Note After mount the partition is won't be accessible with explorer unless you k
 
 #### 3. Setup the SMBIOS with the Generator
 
-To Edit the config.plist, you can use [ProperTree](https://github.com/corpnewt/ProperTree) (Note, to use this app, you will need to install [Python](https://www.python.org/downloads/) 3.9+ first, the MacOS pre-installed Python isn't sufficient enough. Then navigate to ~/ProperTree/Scripts, and run buildapp-select.command to build a MacOS app.)
+To Edit the config.plist, you can use [ProperTree](https://github.com/corpnewt/ProperTree) (Note, to use this app in MacOS, you will need to install [Python](https://www.python.org/downloads/) 3.9+ manually first, the MacOS pre-installed Python isn't sufficient enough. Then navigate to ~/ProperTree/Scripts, and run buildapp-select.command to build a MacOS app.)
 
 To Generate SMBIOS, you can use [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS), it is pretty straight forward(Press 1 to Install MacSerial first, then follow the instruction, you want to generate SMBIOS for **iMac20,2**). Place the generated data into PlatformInfo/Generic of your config.plist
 
@@ -101,7 +104,9 @@ You are done.
 
 #### 4. Install MacOS 
 
-Detail won't be provided, please refer to Dortania's Guide
+Detail won't be provided, please refer to Dortania's Guide (Make sure you have made a 200MB EFI partition as a first partition of the SSD you are about to install MacOS into) 
+
+I have found that the installer enviornment takes longer to be fully initialized than actual MacOS, so if have a black screen or your mouse isn't responding and such, be more patient and give it 2 more minute before you restart.
 
 #### 5. Post-Install
 
@@ -133,11 +138,11 @@ Above is my port discovery FYI, I do not know the Internal Type-C port number, a
 
 **To enable/disable a port**, just key in its port number,
 
-**To change a port's type**, type "T:PortNumber:xxx"    Example: to change Port 2 to type 255, "T:2:255" 
+**To change a port's type**, type "T:PortNumber:xxx"    Example: to change Port 11 to type 255, "T:11:255" 
 
+then generate UTBMap.kext, put [USBToolBox.kext](https://github.com/USBToolBox/kext/releases) along with UTBMap.kext and place them both into your EFI/OC/Kexts folder (and add to your config.plist, my config.plist have it added already) 
 
-
-then generate UTBMap.kext, and place it in your EFI/OC/Kexts folder (and add to your config.plist, my config.plist have it added already)
+**Make sure on config.plist**, USBToolBox.kext entry **is ABOVE** UTBMap.kext or it won't load properly, check my config.plist for reference.
 
 
 
@@ -146,6 +151,8 @@ then generate UTBMap.kext, and place it in your EFI/OC/Kexts folder (and add to 
 When you add kext entry to your config.plist, **the order matters**
 
 For example, you need to put VirtualSMC.kext before SMCProcessor.kext, otherwise SMCProcessor.kext won't load properly as its dependency isn't loaded yet.
+
+Same goes with Whatevergreen and AppleALC, same goes with USBToolBox and its mapping
 
 
 
@@ -168,3 +175,74 @@ Todo:
 
 WIP, guide will upload soon
 
+
+
+#### 9. Overclock I Run
+
+1. Voltage/Power Related: 
+
+​		vCore:	1.345v (Override Mode)
+
+​		SA:		  1.4v
+
+​		IO:		   1.36v
+
+​		DRAM:	1.44v
+
+​		CPU Loadline Calibration: Mode 6
+
+​		CPU Over Temperature Protection: 95 DegreesC
+
+​		CPU Switching Frequency: 630KHz (I don't think this matters much but I had it anyway)
+
+​		Intel C-State: Disabled
+
+2. Core:
+
+   ​	CPU Ratio: 49
+
+   ​	Ring Ratio: 47
+
+3. RAM:
+
+   **Primary:**
+
+   ​	4400@ 17-21-21-38-660 2T
+
+   **Secondary:**
+
+   ​	tREFI 65535
+   ​	tWR 10 tWR_MR auto tRTP 5 RTP_MR auto
+   ​	tWTR 3 WTR_L 6
+   ​	tRRD 4 RRD_L 4 tFAW 16
+   ​	tCWL 18
+
+   **Territory:**
+
+   ​	RDRD SG 6 DG 4
+   ​	WRWR SG 6 DG 4
+   ​	RDWR SG 10 DG 10
+   ​	WRRD SG 29 DG 27
+
+   (My Kit was 16G*2 with Micron C9BLH IC, so they are single rank and is 1DPC, hence DR DD setting not required)
+
+   **RTL/IOL:**
+
+   Latency Timing Setting Mode = Fixed Mode
+
+   RTL init Value: 66 (both dimm) 
+
+   IOL Init Value: 2 (never had any issue with cold boot yet)
+
+   which gives me: RTL 67 on both channel, IOL 9/7 
+
+   **ODT** 
+
+   (same on both Channel)
+   Rtt wr 80
+   Rtt Norm 34
+   Rtt Park 240
+
+   
+
+   ​	

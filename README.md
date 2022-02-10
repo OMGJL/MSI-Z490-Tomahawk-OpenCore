@@ -158,6 +158,10 @@ Same goes with Whatevergreen and AppleALC, same goes with USBToolBox and its map
 
 #### 8. Nice to have
 
+**Sync Time Between Windows and Mac**
+open CMD as admin, copy and run the following line:
+Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1
+
 **Allow your bluetooth device to connect to both your Windows/Mac without needing to pair them again.** Credit to [Dortania](https://github.com/dortania/clover-laptop-guide/blob/master/extras/dual-booting-with-bluetooth-devices.md) and u/TheVoyvode from [Reddit](https://www.reddit.com/r/hackintosh/comments/p5ost3/macos_monterey_and_windows_bluetooth_pairing/) 
 
 Todo:

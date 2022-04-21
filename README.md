@@ -38,7 +38,7 @@ Everything is working (WiFi, bluetooth, USB, Sleep, Wake, dGPU, iGPU, Audio)
 
 PS2 port has not been taken care of, but should work after apply VoodooPS2.Kext
 
-**note: when connecting to 1Gbps Ethernet port with RTL 2.5Gbps Ethernet port. It will only work after go into Network -> Ethernet 2 -> Advanced -> Hardware -> Speed -> 1000baseT 
+**note: when connecting to 1Gbps Ethernet port with RTL 2.5Gbps Ethernet port. It will only work after go into Network -> Ethernet 2 -> Advanced -> Hardware -> Speed -> 1000baseT (You may need to manually configure DNS too)
 
 ----------------
 

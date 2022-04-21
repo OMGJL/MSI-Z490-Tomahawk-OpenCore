@@ -34,11 +34,11 @@ OpenCore: 0.7.7
 
 OS: Monterey 12.3 Latest Update (As of 2022/Mar/26)
 
-Everything seems to be working (WiFi, bluetooth, USB, Sleep, Wake, dGPU, iGPU, Audio)
-
-What's not tested(but should be working): Both Lan Port, Rear Audio
+Everything is working (WiFi, bluetooth, USB, Sleep, Wake, dGPU, iGPU, Audio)
 
 PS2 port has not been taken care of, but should work after apply VoodooPS2.Kext
+
+**note: when connecting to 1Gbps Ethernet port with RTL 2.5Gbps Ethernet port. It will only work after go into Network -> Ethernet 2 -> Advanced -> Hardware -> Speed -> 1000baseT 
 
 ----------------
 
